@@ -1,12 +1,25 @@
 import { Link, useParams } from "react-router-dom"
-import { products } from "../resources/product"
+import { useState, useEffect } from "react"
+import axios from 'axios'
 
 
 const SingleProductPage = () => {
 
     const params = useParams()
 
-    const product = products.find(p => p._id === params.id)
+    const [product, setProduct] = useState([])
+
+    async function getDataFromApi() {
+
+        const res = await axios.get(`/api/products/${params.id}`)
+        setProduct(res.data)
+    }
+
+    useEffect(() => {
+
+        getDataFromApi()
+
+    }, [])
 
 
     return (
@@ -19,7 +32,7 @@ const SingleProductPage = () => {
             <article className="flex space-x-10">
 
                 <figure className="">
-                    <img src={"." + product.image} alt="" />
+                    <img src={product.image} alt="" />
                 </figure>
 
                 <section className="flex flex-col space-y-5 w-60 ">

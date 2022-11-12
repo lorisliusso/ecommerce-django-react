@@ -1,7 +1,22 @@
-import { products } from "../resources/product"
 import Product from "../Product"
+import { useState, useEffect } from "react"
+import axios from 'axios'
 
 export const Home = () => {
+
+    const [products, setProducts] = useState([])
+
+    async function getDataFromApi() {
+
+        const res = await axios.get('/api/products/')
+        setProducts(res.data)
+    }
+
+    useEffect(() => {
+
+        getDataFromApi()
+
+    }, [])
 
     return (
 
