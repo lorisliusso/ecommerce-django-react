@@ -3,6 +3,14 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import { productListReducer, productDetailsReducer } from './reducers/productReducer'
 import { cartReducer } from "./reducers/cartReducer"
 
+
+const cartItemsFromStorage = localStorage.getItem('cartItems') ?
+        JSON.parse(localStorage.getItem('cartItems')) : []
+
+  const initialState = {
+    cart: {cartItems: cartItemsFromStorage}
+  }
+
 const store = configureStore({
   reducer: {
 
@@ -11,14 +19,9 @@ const store = configureStore({
     cart:cartReducer,
     
   }
-})
+}, initialState)
 
-const cartItemsFromStorage = localStorage.getItem('cartItems') ?
-        JSON.parse(localStorage.getItem(cartItemsFromStorage)) : []
 
-  const initialState = {
-    cart: {cartItems: cartItemsFromStorage}
-  }
 
 export default store
 
